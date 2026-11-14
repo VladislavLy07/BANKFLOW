@@ -28,3 +28,4 @@
 6. В каждой дисциплине вкладка «Для преподавателя» даёт отдельный ZIP. Для физкультуры — `docs/08-physical-education.md`.
 
 На Windows можно запустить `START_WINDOWS.bat` (Python должен быть установлен). На Linux/macOS — `./start.sh`. Для сборки после правок: `python src/build.py`. Проверки описаны в `tests/verification.txt`.
+BANKFLOW v1.0 — Ready for deployment.
