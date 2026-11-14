@@ -64,7 +64,7 @@ class Handler(BaseHTTPRequestHandler):
             if p.path in STATIC:
                 f=ROOT/STATIC[p.path]
                 if f.is_file():self.send(f.read_bytes(),MIME[f.suffix]);return
-            elif p.path=='/api/health':self.json({'status':'ok','database':'SQLite','version':'1.1'});return
+            elif p.path=='/api/health':self.json({'status':'ok','database':'SQLite','version':'1.2'});return
             elif p.path=='/api/clients':self.json(get_clients(parse_qs(p.query).get('q',[''])[0]));return
             elif p.path=='/api/requests':self.json(get_requests());return
             self.json({'error':'Not found'},404)

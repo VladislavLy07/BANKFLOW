@@ -6,7 +6,7 @@ Python SQLite: actual local HTTP API health and case-insensitive client search, 
 JavaScript: all 47 task outputs executed in Node (45 primary + 2 additional); manual prompt/alert interactions not automated.
 MySQL: SQL files authored, server runtime not available for actual MySQL validation. Need to execute in MySQL 8 and capture results.
 Express: source and package manifest created; dependency not installed in environment, actual Express runtime not tested.
-No work has been submitted to a teacher. No GitHub repository or Pages deployment has been created.
+No work had been submitted to a teacher at the time of initial verification. The repository and Pages were created later.
 
 BANKFLOW v1.1 — regression verification
 - Chromium/Playwright: original 7-module regression suite passed, all 7 ZIP downloads, 390/800/1280 widths, no page errors.
@@ -16,3 +16,9 @@ BANKFLOW v1.1 — regression verification
 - Node service worker simulation: install, version cleanup, offline fallback, cache scope, API exclusion. Real service worker installation and offline operation on Android still require device verification.
 - Scheduling: 17 tasks, CPM 25 days, two critical paths, nonnegative reserves.
 - MySQL and Express runtime still unverified; academic variants, original tasks for БД/ВМИП, dataset approval, PIS screenshots/formal layout, standardization reliability calculations remain open.
+
+BANKFLOW v1.2 — academic package verification
+- Executed all 6 code cells in the actual Jupyter Python kernel using a temporary directory containing the original CSV. Output cells and three plots saved in the Notebook. No execution errors. Clean CSV compared using pandas.testing.assert_frame_equal against the project snapshot. Primary strategy: 361 -> 360 rows; strict outlier-row removal alternative: 358 rows.
+- DOCX report rendered to 7 pages and visually checked. Evidence PNGs show actual stored notebook input/output rendered in a browser, not a fabricated Colab screenshot. No approval or submission claimed.
+- Original IIS individual task and PIS lab 3 RTF reread. Detailed TZ headings aligned with the source; the choice of topic, 2026 schedule, design decisions and old normative references are explicitly qualified.
+- All 7 navigation and download tests passed in Chromium, 47 JavaScript task executions passed, SQLite API and foreign-key checks passed, browser storage/progress/routes regression passed, service-worker simulation passed. MySQL and Express execution, Colab execution, Android PWA and the final deployed version are not verified.

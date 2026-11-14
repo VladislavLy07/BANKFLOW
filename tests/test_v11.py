@@ -1,4 +1,4 @@
-"""Regression tests for release 1.1. No production database is modified."""
+"""Regression tests introduced in release 1.1, updated for 1.2. No production database is modified."""
 from pathlib import Path
 import tempfile, subprocess, sys, time, urllib.request, urllib.error, json, sqlite3
 from playwright.sync_api import sync_playwright
@@ -10,7 +10,7 @@ with tempfile.TemporaryDirectory() as tmp:
  try:
   for _ in range(40):
    try:
-    with urllib.request.urlopen(base+'/api/health') as r:assert json.load(r)['version']=='1.1';break
+    with urllib.request.urlopen(base+'/api/health') as r:assert json.load(r)['version']=='1.2';break
    except Exception:time.sleep(.1)
   else:raise RuntimeError('Server did not start')
   def api(path,data=None,method='GET',headers=None):
