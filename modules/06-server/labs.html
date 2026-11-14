@@ -1,0 +1,70 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BANKFLOW — СИТ ЛР1–6</title><style>body{font:15px system-ui;background:#f2f5fa;color:#142e58;margin:0}main{max-width:1000px;margin:auto;padding:25px}section{background:white;border-radius:15px;padding:20px;margin:12px 0}button{font:inherit;background:#f36b21;color:white;border:0;padding:8px 13px;border-radius:8px;cursor:pointer}pre{background:#142e58;color:white;padding:13px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}select{font:inherit;padding:10px}article{padding:10px 0;border-bottom:1px solid #ddd}</style><main><h1>BANKFLOW · Серверные интернет-технологии</h1><p>Гончаров Д. С. · 45 основных пунктов и дополнительные упражнения. Нажмите на задание, чтобы выполнить JavaScript.</p><select id="select"></select><section id="result"></section><p>ЛР3 №4 повторяется, обозначен 4а/4б. Исходный приложенный HTML ЛР3 требует сверки; №7/8/10 и оформление — уточнить.</p></main><script>// СИТ · Гончаров Д. С. · ЛР 1–6: отдельные решения по найденным формулировкам.
+// Задание ЛР1 просит alert/prompt: для него предусмотрен отдельный интерактивный запуск.
+// ЛР3: №4 в оригинале встречается дважды; 4а — бисекция, 4б — часы.
+const JS_LABS=[
+{n:1,title:'Числа, строки и условия',tasks:[
+['1','Деление на ноль',()=>{let x=10,y=15,z=0;return x+y/z;}],
+['2','Сложение строк и числа',()=>{let s1='123',s2='456',s3='name',n=123;return [s1+s2,n+s2,n+s3,'Оператор + при строковом операнде выполняет конкатенацию'];}],
+['3','Шаблонная строка',()=>{let num1=123,num2=456;return `Результат = ${num1+num2}`;}],
+['4','Проверка палиндромов',()=>{let poly='abcdedcba',test='teststring';const check=s=>s===[...s].reverse().join('');return [poly,check(poly),test,check(test)];}],
+['5','Максимум трёх чисел',()=>{let a=10,b=17,c=5;return Math.max(a,b,c);}],
+['6','Площадь треугольника',()=>{const area=(a,b,c)=>{if(Math.min(a,b,c)<=0||a+b<=c||a+c<=b||b+c<=a)return 'Треугольник не существует';let p=(a+b+c)/2;return Math.sqrt(p*(p-a)*(p-b)*(p-c));};return [[5,6,7,area(5,6,7)],[10,12,25,area(10,12,25)]];}],
+['7','Оператор switch',()=>{const f=n=>{switch(n){case 1:return 'Равно 1';case 2:return 'Равно 2';case 3:return 'Равно 3';default:return 'Не равно 1, 2, 3';}};return [1,2,3,9].map(f);}],
+['8','Дни недели',()=>{const days=['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];const day=n=>Number.isInteger(n)&&n>=1&&n<=7?days[n-1]:'Неверный номер';return [1,5,7,9].map(day);}],
+['9','Оператор ??',()=>{let v=null;return [v??'по умолчанию',0??42,false??true];}],
+['Доп.','Регулярное выражение URL',()=>{const re=/^https?:\/\/(?:[\w-]+\.)+[a-z]{2,}(?::\d{1,5})?(?:[/?#][^\s]*)?$/i;return ['https://example.com/path','http://localhost','bad url'].map(x=>[x,re.test(x)]);}],
+]},
+{n:2,title:'Массивы, типы, даты',tasks:[
+['1','Делимость на три двумя способами',()=>{const n=123456789;return {remainder:n%3,digitSum:[...String(n)].reduce((s,x)=>s+Number(x),0),divisible:n%3===0,digitCheck:[...String(n)].reduce((s,x)=>s+Number(x),0)%3===0};}],
+['2','Типы данных',()=>{let test_function=(a,b)=>a+b;return [null,5,'teststring',[1,2,'str1'],test_function].map(x=>[x===null?'null':Array.isArray(x)?'array':String(x),typeof x]);}],
+['3','Инверсия регистра',()=>{const s='A1b2C3d4E5g6H';return [s,[...s].map(c=>c===c.toUpperCase()?c.toLowerCase():c.toUpperCase()).join('')];}],
+['4','Сумма числовых элементов',()=>{const a=[2,'name',4.5,'str1','str2',9,['true','false'],0.5],b=['name','str1','str2',['true','false']];const sum=a=>a.filter(x=>typeof x==='number'&&Number.isFinite(x)).reduce((s,x)=>s+x,0);return [sum(a),sum(b)];}],
+['5','Простые числа 1–100',()=>{const isPrime=n=>{if(n<2)return false;for(let d=2;d*d<=n;d++)if(n%d===0)return false;return true;};return Array.from({length:100},(_,i)=>i+1).filter(isPrime);}],
+['6','Сортировка массивов',()=>{const a=[32,7,90,-4,15,900,64],b=['HTML','RUBY','CSS','Python','C++'];return [a.sort((a,b)=>a-b),b.sort((a,b)=>a.localeCompare(b,'en'))];}],
+['7','День недели через 5 и 177 дней',()=>{const f=n=>{let d=new Date();d.setDate(d.getDate()+n);return d.toLocaleDateString('ru-RU',{weekday:'long',year:'numeric',month:'2-digit',day:'2-digit'});};return [f(5),f(177)];}],
+['Доп.','URL — повторение ЛР1',()=>{const re=/^https?:\/\/(?:[\w-]+\.)+[a-z]{2,}(?::\d{1,5})?(?:[/?#][^\s]*)?$/i;return ['https://example.org','not-a-url'].map(x=>[x,re.test(x)]);}],
+]},
+{n:3,title:'Функции, HTML, объекты',tasks:[
+['1','Десятичная запятая',()=>{const parse=s=>Number(s.trim().replace(',','.'));return ['3,14',parse('3,14'),'2.5',parse('2.5')];}],
+['2','Тригонометрическая таблица',()=>{return [0,15,30,45,60,75,90].map(x=>{let r=x*Math.PI/180;return {x,sin:+Math.sin(r).toFixed(6),cos:+Math.cos(r).toFixed(6),tg:x===90?'не определён':+Math.tan(r).toFixed(6)};});}],
+['3','Двоичное число',()=>{const binary=s=>{if(!/^[01]+$/.test(s))throw Error('Не двоичное число');return [...s].reduce((a,b)=>a*2+Number(b),0);};return ['110011','111'].map(x=>[x,binary(x)]);}],
+['4а','Метод бисекции',()=>{const bisect=(f,a,b,eps)=>{if(f(a)*f(b)>0)return 'Нет смены знака';if(f(a)===0)return a;if(f(b)===0)return b;while(b-a>eps){let m=(a+b)/2;if(f(m)===0)return m;if(f(a)*f(m)<=0)b=m;else a=m;}return (a+b)/2;};return [bisect(x=>x*x-Math.cos(x),0,1,.001),bisect(x=>x**4+1.5-Math.sin(x),0,1,.001),'Вторая функция ≥ 0.5: корней на [0,1] нет.'];}],
+['4б','Часы HH:MM:SS',()=>{const now=new Date(),p=x=>String(x).padStart(2,'0');return [p(now.getHours()),p(now.getMinutes()),p(now.getSeconds())].join(':');}],
+['5','Поиск Bob в массиве объектов',()=>{let user=[{name:'John',age:30},{name:'Bob',age:21},{name:'Anna',age:19}];let bob=user.find(x=>x.name==='Bob');return bob;}],
+['6','Ключи и значения объекта',()=>{let an_obj={100:'a',2:'b',7:'c'};return {keys:Object.keys(an_obj),values:Object.values(an_obj)};}],
+['7','Логарифмы и удаление нечисловых свойств',()=>{let menu={width:200,height:300,title:'My menu'};const logs=o=>{for(const [k,v] of Object.entries(o))if(typeof v==='number'&&v>0)o['log_'+k]=Math.log10(v);return o;};const nums=o=>{for(const k of Object.keys(o))if(typeof o[k]!=='number')delete o[k];return o;};return nums(logs(menu));}],
+]},
+{n:4,title:'Объекты и ссылки',tasks:[
+['1','Список свойств студента',()=>{let student={name:'David',last_name:'Smirnoff',year:3,average_mark:95};return Object.keys(student);}],
+['2','Ссылки user/admin/director',()=>{let user={name:'David',job:'manager',salary:50000};let admin=user;admin.name='Alex';let a=user.name;user=null;let b=admin.name;let director=admin;director.salary+=1000;director.job='boss';let c={...admin};admin=null;director=null;let d;try{d=director.job}catch(e){d=e.name};return {afterRename:a,afterUserNull:b,sharedObject:c,afterDirectorNull:d};}],
+['3','Удвоить числовые свойства',()=>{const multNum=o=>{for(const k of Object.keys(o))if(typeof o[k]==='number')o[k]*=2;return o;};return multNum({width:200,height:300,depth:250,title:'My cube'});}],
+['4','Общие свойства с одинаковыми значениями',()=>{const a={a:1,b:2,c:3,d:4,e:5,str1:'name',str2:'Peter'},b={z:1,w:2,c:3,d:4,e:5,str1:'family',str2:'Peter'};return Object.fromEntries(Object.entries(a).filter(([k,v])=>Object.hasOwn(b,k)&&b[k]===v));}],
+['5','Объект → пары ключ/значение',()=>{let o={name:'Ann',age:22,city:'Rostov'};return Object.entries(o);}],
+['6','Обмен ключей и значений',()=>{let o={name:'Ann',age:22,city:'Rostov'};return Object.fromEntries(Object.entries(o).map(([k,v])=>[String(v),k]));}],
+['7','Найти jQuery',()=>{let o={js:['jQuery','Angular'],php:'hello',css:'world'};let jq=o.js.find(x=>x==='jQuery');return jq;}],
+['8','Глубокая копия объекта',()=>{let obj2={city:'Rostov'},obj1={name:'Ann',inner_obj:obj2};let obj3=structuredClone(obj1);obj3.inner_obj.city='Krasnodar';return {obj1,obj3};}],
+]},
+{n:5,title:'Конструкторы, методы, this',tasks:[
+['1','Конструктор с параметром по умолчанию',()=>{function Person(name,age,profession='unknown'){this.name=name;this.age=age;this.profession=profession;}return [new Person('Ann',21),new Person('Bob',30,NaN),new Person('Tom',25,false)].map(p=>({...p,profession:String(p.profession)}));}],
+['2','Калькулятор с пятью методами',()=>{let calculator={read(a,b){if(!Number.isFinite(a)||!Number.isFinite(b))throw Error('Нужны числа');this.a=a;this.b=b;return this;},sum(){return this.a+this.b;},mul(){return this.a*this.b;},substr(){return this.a-this.b;},div(){if(this.a===0)throw Error('Деление на ноль');return this.b/this.a;}};calculator.read(5,10);return {sum:calculator.sum(),mul:calculator.mul(),substr:calculator.substr(),div:calculator.div()};}],
+['3','Три книги',()=>{function Book(title,price){this.title=title;this.price=price;this.show=function(){return `${this.title}: ${this.price}`;};}return [new Book('JS',500),new Book('SQL',700),new Book('Python',900)].map(b=>b.show());}],
+['4','Лестница с цепочкой вызовов',()=>{let out=[];let ladder={step:0,up(){this.step++;return this;},down(){this.step=Math.max(0,this.step-1);return this;},showStep(){out.push(this.step);return this;}};ladder.up().up().down().showStep().down().showStep().down().showStep();return out;}],
+['5','this обычной и стрелочной функции',()=>{const call={caller:'mom',says:function(){return `Hey, ${this.caller} just called.`;}};function makeArrow(){return {caller:'mom',says:()=>`Hey, ${this.caller} just called.`};}const arrow=makeArrow.call({caller:'outer'});return [call.says(),arrow.says(),'Стрелка наследует this из внешней функции, а не из объекта call.'];}],
+['6','Symbol и for…in',()=>{const unique=Symbol('unique');let user={name:'Ann',age:25,profession:'manager',salary:50000,[unique]:123};let values=[];for(let k in user)values.push(user[k]);return {values,symbolValue:user[unique],explanation:'for...in не перечисляет Symbol'};}],
+]},
+{n:6,title:'Symbol, Map, Set',tasks:[
+['1','Пять ключей, включая Symbol',()=>{let a=Symbol('a'),b=Symbol('b'),o={name:'Ann',age:22,city:'Rostov',[a]:1,[b]:2};return {keys:Object.keys(o),json:JSON.stringify(o),reflect:Reflect.ownKeys(o).map(String)};}],
+['2','Map с массивами в ключах',()=>{let a=[1,2],b=[3,4],m=new Map([[a,'first'],[b,'second']]);return {entries:[...m],getSameReference:m.get(a),getNewArray:m.get([1,2])??'undefined'};}],
+['3','Map с объектом → Object.fromEntries',()=>{let key={id:1},m=new Map([[key,'client'],['name','Ann']]);return Object.fromEntries(m);}],
+['4','Топ-5 языков',()=>{let a=[{Swahili:4},{Arabic:25},{Russian:9},{English:91},{Portuguese:9},{Dutch:8},{German:7},{French:45},{Chinese:5},{Spanish:24},{Serbian:4}];return a.flatMap(Object.entries).sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,5);}],
+['5','Уникальные строки',()=>{let a=['card','loan','card','deposit','loan','deposit'];return [...new Set(a)];}],
+['6','Очистка массива от анаграмм',()=>{const aclean=a=>{let m=new Map();for(const s of a)m.set([...s.toLowerCase()].sort().join(''),s);return [...m.values()];};return aclean(['сон','нос','ток','кот','кто','дом','мод']);}],
+['7','Пара с заданной суммой',()=>{const hasPair=(a,sum)=>{let seen=new Set();for(const x of a){if(seen.has(sum-x))return true;seen.add(x);}return false;};return [hasPair([2,7,11,15],9),hasPair([1,3,6,8],14+2)];}],
+]}
+];
+function displayResult(v){if(typeof v==='number'&&!Number.isFinite(v))return String(v);if(typeof v==='string')return v;return JSON.stringify(v,null,2)}
+function runPromptLab1(){alert('Задание 1: '+(10+15/0));const vals=[];for(const k of ['a','b','c']){const raw=prompt('Сторона '+k,'5');if(raw===null)return;vals.push(Number(raw));}const [a,b,c]=vals;if(!vals.every(Number.isFinite)||Math.min(...vals)<=0||a+b<=c||a+c<=b||b+c<=a){alert('Треугольник не существует');return;}let p=(a+b+c)/2;alert('Площадь: '+Math.sqrt(p*(p-a)*(p-b)*(p-c)));}
+function runPromptLab5(){const a=prompt('Первое число','5'),b=prompt('Второе число','10');if(a===null||b===null)return;const calculator={read(a,b){if(!a.trim()||!b.trim()||!Number.isFinite(+a)||!Number.isFinite(+b))throw Error('Нужны числа');this.a=+a;this.b=+b;return this;},sum(){return this.a+this.b;},mul(){return this.a*this.b;},substr(){return this.a-this.b;},div(){return this.a===0?'Деление на ноль':this.b/this.a;}};try{calculator.read(a,b);alert('Сумма: '+calculator.sum()+'; произведение: '+calculator.mul()+'; разность: '+calculator.substr()+'; частное: '+calculator.div());}catch(e){alert(e.message)}}
+if(typeof module!=='undefined')module.exports={JS_LABS,displayResult};
+
+const sel=document.querySelector('#select'),r=document.querySelector('#result');JS_LABS.forEach(l=>{let o=document.createElement('option');o.value=l.n;o.textContent='ЛР'+l.n+' — '+l.title;sel.append(o)});function render(){let l=JS_LABS.find(x=>x.n==sel.value);r.replaceChildren();let timer;for(let t of l.tasks){let a=document.createElement('article'),h=document.createElement('h3'),b=document.createElement('button'),c=document.createElement('button'),pre=document.createElement('pre');h.textContent=t[0]+'. '+t[1];b.textContent='Выполнить';c.textContent='Код';c.style.marginLeft='8px';pre.hidden=true;a.append(h,b,c,pre);r.append(a);b.onclick=()=>{pre.hidden=false;pre.textContent=displayResult(t[2]());if(l.n===3&&t[0]==='4б'){clearInterval(timer);timer=setInterval(()=>{if(!pre.isConnected){clearInterval(timer);return}pre.textContent=t[2]()},1000)}};c.onclick=()=>{pre.hidden=false;pre.textContent=t[2].toString()}}if(l.n===1||l.n===5){let b=document.createElement('button');b.textContent='Запустить prompt / alert';b.onclick=l.n===1?runPromptLab1:runPromptLab5;r.append(b)}}sel.onchange=render;render();</script></html>

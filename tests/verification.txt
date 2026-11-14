@@ -1,0 +1,9 @@
+BANKFLOW v1.0 — verification
+Chromium/Playwright: all 7 navigation modules, demo tabs, labs tabs, source previews and teacher ZIP downloads; DB search 4 matches for Орлова and 0 for nonexistent search; VMIP calculator; IIS raw dataset and missing value; ISIT rights toggling and query selection; PIS 3 lab tabs; SIT 9 material tabs; standards 8 lab tabs; audit checklist; responsive widths 1280/800/390. No page errors.
+Browser automation environment blocks file:// navigation by policy, so the standalone HTML was executed by set_content (no external resources), not opened by OS file association. Android device itself was not tested.
+Python: actual analysis.py execution (361 → 360 records, 9 columns, median 21.6); generated CSV, 3 charts and output log.
+Python SQLite: actual local HTTP API health and case-insensitive client search, 4 tables, 60 clients, 360 requests, no foreign-key violations.
+JavaScript: all 47 task outputs executed in Node (45 primary + 2 additional); manual prompt/alert interactions not automated.
+MySQL: SQL files authored, server runtime not available for actual MySQL validation. Need to execute in MySQL 8 and capture results.
+Express: source and package manifest created; dependency not installed in environment, actual Express runtime not tested.
+No work has been submitted to a teacher. No GitHub repository or Pages deployment has been created.

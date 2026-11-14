@@ -1,0 +1,1 @@
+{"name": "BANKFLOW", "short_name": "BANKFLOW", "start_url": "./index.html", "display": "standalone", "theme_color": "#142e58", "background_color": "#f2f5fa", "icons": [{"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"}]}

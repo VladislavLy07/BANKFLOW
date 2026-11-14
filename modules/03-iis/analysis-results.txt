@@ -1,0 +1,41 @@
+Размер: (361, 9) 
+Типы: id               int64
+client_id        int64
+employee_id      int64
+product_id       int64
+category        object
+date            object
+hours          float64
+status          object
+priority        object
+dtype: object 
+Пропуски: id             0
+client_id      0
+employee_id    0
+product_id     0
+category       0
+date           0
+hours          1
+status         0
+priority       0
+dtype: int64
+                id   client_id  employee_id  product_id category        date       hours   status priority
+count   361.000000  361.000000   361.000000  361.000000      361         361  360.000000      361      361
+unique         NaN         NaN          NaN         NaN        6         165         NaN        3        2
+top            NaN         NaN          NaN         NaN    Карты  2026-06-11         NaN  Закрыто  Обычный
+freq           NaN         NaN          NaN         NaN       73           4         NaN      217      271
+mean    180.030471   30.445983     8.008310    7.980609      NaN         NaN   22.767778      NaN      NaN
+std     104.304851   17.348487     4.323378    4.336174      NaN         NaN   15.196942      NaN      NaN
+min       1.000000    1.000000     1.000000    1.000000      NaN         NaN   -4.000000      NaN      NaN
+25%      90.000000   15.000000     4.000000    4.000000      NaN         NaN   10.875000      NaN      NaN
+50%     180.000000   30.000000     8.000000    8.000000      NaN         NaN   21.650000      NaN      NaN
+75%     270.000000   45.000000    12.000000   12.000000      NaN         NaN   33.725000      NaN      NaN
+max     360.000000   60.000000    15.000000   15.000000      NaN         NaN  180.000000      NaN      NaN
+После очистки: (360, 9) Медиана: 21.6
+                  count       mean  min   max
+category                                     
+Вклады               72  19.366667  0.5  44.8
+Инвестиции           72  24.044444  0.7  44.6
+Карты                73  22.017808  1.0  43.6
+Кредиты              71  24.359155  2.0  42.1
+Цифровые сервисы     72  22.122222  1.0  44.9
