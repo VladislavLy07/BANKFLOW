@@ -6,4 +6,4 @@ Python SQLite: actual local HTTP API health and case-insensitive client search, 
 JavaScript: all 47 task outputs executed in Node (45 primary + 2 additional); manual prompt/alert interactions not automated.
 MySQL: SQL files authored, server runtime not available for actual MySQL validation. Need to execute in MySQL 8 and capture results.
 Express: source and package manifest created; dependency not installed in environment, actual Express runtime not tested.
-No work has been submitted to a teacher. No GitHub repository or Pages deployment has been created.
+No work has been submitted to a teacher. The local tests above were performed before GitHub publication. Repository and source files have since been uploaded; GitHub Pages has not yet been enabled.
