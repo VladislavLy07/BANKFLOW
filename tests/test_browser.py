@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 from pathlib import Path
-import subprocess,sys,time,urllib.request,json,sqlite3,os
+import subprocess,sys,time,urllib.request,json,sqlite3,os,tempfile
 P=Path(__file__).resolve().parents[1]; errors=[];log=[]
 with sync_playwright() as w:
  browser=w.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox'])
@@ -38,7 +38,8 @@ with sync_playwright() as w:
  browser.close()
 assert not errors,errors
 # start real server and test API/database
-p=subprocess.Popen([sys.executable,str(P/'backend/server.py'),'--port','8765'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+tmp=tempfile.TemporaryDirectory(); db=Path(tmp.name)/'test.sqlite3'
+p=subprocess.Popen([sys.executable,str(P/'backend/server.py'),'--port','8765','--db',str(db)],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 try:
  for _ in range(30):
   try:
@@ -47,10 +48,10 @@ try:
  else:raise RuntimeError('server failed')
  from urllib.parse import quote
  with urllib.request.urlopen('http://127.0.0.1:8765/api/clients?q='+quote('орлова')) as r:assert len(json.load(r))==4
- with sqlite3.connect(P/'data/bankflow.sqlite3') as c:
+ with sqlite3.connect(db) as c:
   assert c.execute('PRAGMA foreign_key_check').fetchall()==[]
   assert c.execute('SELECT COUNT(*) FROM requests').fetchone()[0]==360
   assert c.execute('SELECT COUNT(*) FROM clients').fetchone()[0]==60
  log.append('SQLite API / 4 tables / FK integrity OK')
-finally:p.terminate();p.wait()
+finally:p.terminate();p.wait();tmp.cleanup()
 print('\n'.join(log));print('Browser errors:',errors)

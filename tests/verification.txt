@@ -1,4 +1,4 @@
-BANKFLOW v1.0 — verification
+BANKFLOW v1.0 — initial verification
 Chromium/Playwright: all 7 navigation modules, demo tabs, labs tabs, source previews and teacher ZIP downloads; DB search 4 matches for Орлова and 0 for nonexistent search; VMIP calculator; IIS raw dataset and missing value; ISIT rights toggling and query selection; PIS 3 lab tabs; SIT 9 material tabs; standards 8 lab tabs; audit checklist; responsive widths 1280/800/390. No page errors.
 Browser automation environment blocks file:// navigation by policy, so the standalone HTML was executed by set_content (no external resources), not opened by OS file association. Android device itself was not tested.
 Python: actual analysis.py execution (361 → 360 records, 9 columns, median 21.6); generated CSV, 3 charts and output log.
@@ -6,4 +6,13 @@ Python SQLite: actual local HTTP API health and case-insensitive client search, 
 JavaScript: all 47 task outputs executed in Node (45 primary + 2 additional); manual prompt/alert interactions not automated.
 MySQL: SQL files authored, server runtime not available for actual MySQL validation. Need to execute in MySQL 8 and capture results.
 Express: source and package manifest created; dependency not installed in environment, actual Express runtime not tested.
-No work has been submitted to a teacher. The local tests above were performed before GitHub publication. Repository and source files have since been uploaded; GitHub Pages has not yet been enabled.
+No work has been submitted to a teacher. No GitHub repository or Pages deployment has been created.
+
+BANKFLOW v1.1 — regression verification
+- Chromium/Playwright: original 7-module regression suite passed, all 7 ZIP downloads, 390/800/1280 widths, no page errors.
+- Node: 47 JavaScript task executions passed.
+- Actual local SQLite HTTP API: GET, POST, PATCH, persisted status, rejected invalid foreign key, bad status, missing ID, cross-origin writes; foreign-key integrity verified. Test uses temporary database.
+- Chromium compiled UI with storage shim and bridge to actual local HTTP API: create/status update, CSV, local demo persistence, progress JSON export/import, hash routes, 390px, no page errors. Direct HTTP navigation in this environment is blocked (ERR_BLOCKED_BY_ADMINISTRATOR); this is not an end-to-end deployed browser test.
+- Node service worker simulation: install, version cleanup, offline fallback, cache scope, API exclusion. Real service worker installation and offline operation on Android still require device verification.
+- Scheduling: 17 tasks, CPM 25 days, two critical paths, nonnegative reserves.
+- MySQL and Express runtime still unverified; academic variants, original tasks for БД/ВМИП, dataset approval, PIS screenshots/formal layout, standardization reliability calculations remain open.
