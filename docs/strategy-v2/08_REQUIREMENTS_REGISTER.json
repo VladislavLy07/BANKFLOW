@@ -1,0 +1,401 @@
+{
+  "version": "2026-11-17",
+  "status": "source_aware_audit_not_official_assignment",
+  "warning": "Количество работ не нормировано до 8; найденные задания не равны официальному допуску",
+  "subjects": [
+    {
+      "id": "db",
+      "title": "Базы данных",
+      "teacher": "Блиновская Т. М.",
+      "assessment": "экзамен + курсовая",
+      "works": [
+        {
+          "id": "db-unknown-labs",
+          "title": "Лабораторные для контрольной точки",
+          "source": "Письмо Блиновской, 23.10.2026",
+          "source_confidence": "B",
+          "assignment_state": "lab_required_count_unknown",
+          "implementation": "SQLite/SQL демо, не оригинальная ЛР",
+          "remaining_evidence": "оригинальная методичка, СУБД, количество, вариант, формы, скриншоты",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "db-coursework",
+          "title": "Курсовая работа",
+          "source": "Учебный план (ранее)",
+          "source_confidence": "B",
+          "assignment_state": "not_confirmed",
+          "implementation": "нет подтверждённой курсовой",
+          "remaining_evidence": "тема, вариант, структура и критерии защиты",
+          "submitted": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "id": "vmip",
+      "title": "Высокоуровневые методы информатики и программирования",
+      "teacher": "Колесникова О. В.",
+      "assessment": "экзамен",
+      "works": [
+        {
+          "id": "vmip-unknown",
+          "title": "Требования экзамена/лабораторных неизвестны",
+          "source": "Предметный чат + учебный план",
+          "source_confidence": "C",
+          "assignment_state": "not_confirmed",
+          "implementation": "Калькулятор BANKFLOW — добровольный модуль",
+          "remaining_evidence": "оригинальные задания, язык, формат экзамена",
+          "submitted": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "id": "iis",
+      "title": "Интеллектуальные информационные системы",
+      "teacher": "Гробер Т. А.; Гончаров Д. С.",
+      "assessment": "экзамен",
+      "works": [
+        {
+          "id": "iis-lr1",
+          "title": "Подготовка датасета для интеллектуального анализа",
+          "source": "ЛР1_Интел_системы_и_технологии_2025.ipynb",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "6 выполненных ячеек, DOCX, CSV, три графика",
+          "remaining_evidence": "согласование уникального датасета, Colab-скриншоты, сверка всех требований",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "iis-other-unknown",
+          "title": "Возможные последующие ЛР",
+          "source": "IIS_results(2).md; архив Дедактор1 и 2.7z не проверен",
+          "source_confidence": "B",
+          "assignment_state": "not_confirmed",
+          "implementation": "нет подтверждённого комплекта",
+          "remaining_evidence": "оригинальный список обязательных работ",
+          "submitted": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "id": "isit",
+      "title": "Информационные системы и технологии",
+      "teacher": "Барашко Е. Н.",
+      "assessment": "зачёт",
+      "works": [
+        {
+          "id": "isit-lr1",
+          "title": "Пользователи MySQL и права",
+          "source": "1_MySQL.pdf",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "3 сеанса SQL, исходники",
+          "remaining_evidence": "выполнение в MySQL 8, скриншоты GRANT/REVOKE/RENAME/DROP",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "isit-lr2",
+          "title": "Таблица сотрудников",
+          "source": "2_MySQL.pdf",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "SQL скрипты",
+          "remaining_evidence": "выполнение ALTER/UPDATE в MySQL 8 и скриншоты",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "isit-lr3",
+          "title": "19 SQL задач",
+          "source": "3_MySQL.pdf",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "19 SQL формулировок/решений в скриптах",
+          "remaining_evidence": "выполнение 19 запросов и реальный вывод MySQL",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "isit-control-1",
+          "title": "Контрольная работа №1",
+          "source": "МУ к контрольной работе 1_ИСиТ_3 курс.docx",
+          "source_confidence": "B",
+          "assignment_state": "assignment_variant_unknown",
+          "implementation": "демо банк, вариант не установлен",
+          "remaining_evidence": "цифра зачётки, три таблицы по 15 строк, 10 источников, печатный отчёт",
+          "submitted": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "title": "Проектирование информационных систем",
+      "teacher": "Ступина М. В.; Барашко Е. Н.",
+      "assessment": "зачёт",
+      "works": [
+        {
+          "id": "design-lr1",
+          "title": "Введение; обзор; сравнительный анализ",
+          "source": "Указания_к_выполнению_1_лаб_работы.pdf",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "черновик анализа и сравнения",
+          "remaining_evidence": "≥3 реальных ИС, ≥5 критериев, настоящие скриншоты, оформление DOCX",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "design-lr2",
+          "title": "Оргструктура и обеспечивающие подсистемы",
+          "source": "Указания_к_выполнению_2_лаб_работы.pdf",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "схемы, три таблицы по уровням, 8 видов обеспечения",
+          "remaining_evidence": "перестроить отдельные таблицы по каждой функциональной подсистеме, по три уровня",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "design-lr3",
+          "title": "Техническое задание 2.1–2.9",
+          "source": "Указания_к_выполнению_3_лаб_работы.rtf",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "полный проектный черновик",
+          "remaining_evidence": "единый документ, рамки/штампы и скриншоты, проверка разделов",
+          "submitted": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "id": "server",
+      "title": "Серверные интернет-технологии",
+      "teacher": "Горбанев А. Н.; Гончаров Д. С.",
+      "assessment": "зачёт",
+      "works": [
+        {
+          "id": "server-lr1",
+          "title": "9 JS заданий: строки/числа/условия",
+          "source": "Lab01.rtf",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "9 JS решений",
+          "remaining_evidence": "буквальная сверка и демонстрация в браузере",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "server-lr2",
+          "title": "7 JS заданий: массивы и Date",
+          "source": "Lab02_3.txt",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "7 JS решений",
+          "remaining_evidence": "edge cases и скриншоты результатов",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "server-lr3",
+          "title": "8 заданий: HTML и JS",
+          "source": "Lab3_3.txt",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "8 JS решений",
+          "remaining_evidence": "реальный браузер, исходный HTML, бисекция без корня",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "server-lr4",
+          "title": "8 заданий: объекты",
+          "source": "Lab4_3.txt",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "8 JS решений",
+          "remaining_evidence": "сверка копирования и идентичности по примерам",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "server-lr5",
+          "title": "6 заданий: конструкторы и this",
+          "source": "Lab5_3.txt",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "6 JS решений",
+          "remaining_evidence": "browser prompt/alert, вывод, пояснение this",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "server-lr6",
+          "title": "7 заданий: Map, Set, Symbol",
+          "source": "Lab6_3.txt",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "7 JS решений",
+          "remaining_evidence": "анализ спорных крайних случаев, скриншоты",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "server-lr7-unknown",
+          "title": "Номер 7 не найден",
+          "source": "SIT_results.md",
+          "source_confidence": "B",
+          "assignment_state": "not_confirmed",
+          "implementation": "нет",
+          "remaining_evidence": "установить существование и обязательность",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "server-lr9",
+          "title": "Пример Express: заголовок, изображение, подпись",
+          "source": "zadanie.txt",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "исходник сервера",
+          "remaining_evidence": "npm install, npm start, реальный скриншот",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "server-extra",
+          "title": "Материалы 8 и 10",
+          "source": "SIT_results.md",
+          "source_confidence": "B",
+          "assignment_state": "not_confirmed",
+          "implementation": "упоминания Node.js и C++ Winsock",
+          "remaining_evidence": "установить, назначены ли они как ЛР",
+          "submitted": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "id": "std",
+      "title": "Разработка и стандартизация ПС и ИТ",
+      "teacher": "Каныгин Г. И.",
+      "assessment": "дифференцированный зачёт",
+      "works": [
+        {
+          "id": "std-lr11",
+          "title": "Диаграмма Ганта",
+          "source": "Лабораторне работы по РиСПСиИС.docx",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "17 этапов/Гант",
+          "remaining_evidence": "подтвердить назначенную тему и численные допущения",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "std-lr12",
+          "title": "Оперограмма",
+          "source": "Лабораторне работы по РиСПСиИС.docx",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "пример оперограммы",
+          "remaining_evidence": "подтвердить тему, оформление",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "std-lr13",
+          "title": "Сетевой график CPM",
+          "source": "Лабораторне работы по РиСПСиИС.docx",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "граф и критические пути",
+          "remaining_evidence": "подтвердить тему, входы и расчёт",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "std-lr14",
+          "title": "Техническое задание",
+          "source": "Лабораторне работы по РиСПСиИС.docx",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "проектное ТЗ BANKFLOW",
+          "remaining_evidence": "адаптировать под назначенный вариант",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "std-lr21",
+          "title": "Модель Шумана",
+          "source": "Лабораторне работы по РиСПСиИС.docx",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "не выполнено по варианту",
+          "remaining_evidence": "определить вариант, выполнить расчёт, график, вывод",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "std-lr22",
+          "title": "Простая интуитивная модель",
+          "source": "Лабораторне работы по РиСПСиИС.docx",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "не выполнено по варианту",
+          "remaining_evidence": "определить вариант, выполнить расчёт, график, вывод",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "std-lr23",
+          "title": "Модель Мусса",
+          "source": "Лабораторне работы по РиСПСиИС.docx",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "не выполнено по варианту",
+          "remaining_evidence": "определить вариант, выполнить расчёт, график, вывод",
+          "submitted": false,
+          "accepted": false
+        },
+        {
+          "id": "std-lr3",
+          "title": "Стандарты разработки ПО",
+          "source": "Лабораторне работы по РиСПСиИС.docx",
+          "source_confidence": "A",
+          "assignment_state": "original_laboratory_file",
+          "implementation": "сводка стандартов",
+          "remaining_evidence": "уточнить обязательный перечень, применимость к назначенной теме",
+          "submitted": false,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "id": "pe",
+      "title": "Физическая культура (ОФП/СМГ)",
+      "teacher": "Не установлен",
+      "assessment": "зачёт (по старой сводке)",
+      "works": [
+        {
+          "id": "pe-unknown",
+          "title": "Требования зачёта не подтверждены",
+          "source": "Учебная сводка проекта",
+          "source_confidence": "C",
+          "assignment_state": "not_confirmed",
+          "implementation": "только реестр",
+          "remaining_evidence": "преподаватель, посещение, нормативы, условия, сроки",
+          "submitted": false,
+          "accepted": false
+        }
+      ]
+    }
+  ]
+}
