@@ -24,6 +24,7 @@ with sync_playwright() as w:
    for i in range(9):page.locator('#labSelect').select_option(str(i));page.wait_for_selector('#serverLab h3');
    page.locator('#labSelect').select_option('0');assert 'Палиндром: да' in page.locator('#exResult').inner_text()
   if s=='std':
+   page.locator('.study-link').first.click()
    for i in range(8):page.locator('#labSelect').select_option(str(i));page.wait_for_selector('#stdLab h3')
   page.locator('[data-tab="labs"]').click();assert page.locator('.lab-card').count()>0
   page.locator('[data-tab="code"]').click();assert page.locator('.file-row').count()>0

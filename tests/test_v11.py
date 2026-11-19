@@ -48,7 +48,7 @@ with tempfile.TemporaryDirectory() as tmp:
    saved=Path(tmp)/'saved.json';d.value.save_as(str(saved));assert 'Готово к показу' in json.loads(saved.read_text())['progress'].values()
    page.locator('#importProgress').set_input_files(str(saved));page.wait_for_function("document.querySelector('#progressMessage')?.textContent.includes('импортирован')")
    page.evaluate("server=false;setRoute('workspace')");page.locator('#requestForm button[type=submit]').click();assert '361' in page.locator('#workMetrics').inner_text();page.locator('[data-req-id="361"]').select_option('Закрыто');page.locator('[data-nav="home"]').click();page.locator('[data-nav="workspace"]').click();assert page.locator('[data-req-id="361"]').input_value()=='Закрыто';assert '361' in page.evaluate("window.__storage['bankflow:v1.1:requests']")
-   page.evaluate("setRoute('std','demo',2)");assert '25 дней' in page.locator('#stdLab').inner_text();assert page.evaluate("location.hash.includes('std/demo/2')");page.evaluate("readRoute();render()");assert '25 дней' in page.locator('#stdLab').inner_text();assert not errors,errors
+   page.evaluate("setRoute('std','demo',2)");assert '32 рабочих дня' in page.locator('#stdLab').inner_text();assert page.evaluate("location.hash.includes('std/demo/2')");page.evaluate("readRoute();render()");assert '32 рабочих дня' in page.locator('#stdLab').inner_text();assert not errors,errors
    page.screenshot(path=str(P/'tests'/'v11-mobile.png'),full_page=False)
    print('Browser (storage shim/API bridge): live SQLite workspace, status persistence, CSV, progress export/import, demo storage, routes, 390px OK');browser.close()
  finally:p.terminate();p.wait()

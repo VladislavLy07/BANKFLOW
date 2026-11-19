@@ -33,7 +33,7 @@ for s in subjects:
 # escape script closing tags inside embedded downloadable source
 j=lambda x:json.dumps(x,ensure_ascii=False,separators=(',',':')).replace('</','<\\/')
 header='const SUBJECTS='+j(subjects)+';\nconst DATA='+j(data)+';\nconst FILES='+j(files)+';'
-js=(P/'modules/06-server/exercises.js').read_text(encoding='utf-8')+'\n'+(P/'modules/06-server/lab-solutions.js').read_text(encoding='utf-8')+'\n'+(P/'src/workspace.js').read_text(encoding='utf-8')+'\n'+(P/'src/app.js').read_text(encoding='utf-8')
+js=(P/'modules/06-server/exercises.js').read_text(encoding='utf-8')+'\n'+(P/'modules/06-server/lab-solutions.js').read_text(encoding='utf-8')+'\n'+(P/'src/workspace.js').read_text(encoding='utf-8')+'\n'+(P/'src/standards.js').read_text(encoding='utf-8')+'\n'+(P/'src/app.js').read_text(encoding='utf-8')
 html=(P/'src/template.html').read_text(encoding='utf-8').replace('__CSS__',(P/'src/style.css').read_text(encoding='utf-8')).replace('__DATA__',header).replace('__JS__',js)
 (P/'index.html').write_text(html,encoding='utf-8');
 # Version the offline cache with the actual compiled content.
