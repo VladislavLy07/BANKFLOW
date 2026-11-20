@@ -38,6 +38,9 @@ html=(P/'src/template.html').read_text(encoding='utf-8').replace('__CSS__',(P/'s
 (P/'index.html').write_text(html,encoding='utf-8');
 # Version the offline cache with the actual compiled content.
 import hashlib
-(P/'sw.js').write_text((P/'src/sw.template.js').read_text(encoding='utf-8').replace('__VERSION__',hashlib.sha256(html.encode()).hexdigest()[:12]),encoding='utf-8')
+shell_digest = hashlib.sha256(html.encode())
+for asset in ('kanygin.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'modules/07-standards/variant-3.docx'):
+    shell_digest.update((P / asset).read_bytes())
+(P/'sw.js').write_text((P/'src/sw.template.js').read_text(encoding='utf-8').replace('__VERSION__',shell_digest.hexdigest()[:12]),encoding='utf-8')
 
 print('HTML bytes',len(html.encode()),'embedded files',len(files))
