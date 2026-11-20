@@ -52,6 +52,11 @@ def update_request(id,data):
         if not cur.rowcount:raise LookupError('Unknown request')
         return dict(c.execute('SELECT * FROM requests WHERE id=?',(id,)).fetchone())
 STATIC={'/':'index.html','/index.html':'index.html','/manifest.webmanifest':'manifest.webmanifest','/icon.svg':'icon.svg','/icon-192.png':'icon-192.png','/icon-512.png':'icon-512.png','/sw.js':'sw.js'}
+# Only publish files selected by the static build, including the course downloads.
+import mimetypes
+manifest = ROOT/'assets/public-files.json'
+if manifest.is_file():
+    STATIC.update({'/'+name:name for name in json.loads(manifest.read_text())})
 MIME={'.html':'text/html; charset=utf-8','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png','.js':'text/javascript; charset=utf-8'}
 class Handler(BaseHTTPRequestHandler):
     def send(self,body,typ,code=200):
@@ -63,7 +68,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             if p.path in STATIC:
                 f=ROOT/STATIC[p.path]
-                if f.is_file():self.send(f.read_bytes(),MIME[f.suffix]);return
+                if f.is_file():self.send(f.read_bytes(),MIME.get(f.suffix) or mimetypes.guess_type(f.name)[0] or 'application/octet-stream');return
             elif p.path=='/api/health':self.json({'status':'ok','database':'SQLite','version':'1.2'});return
             elif p.path=='/api/clients':self.json(get_clients(parse_qs(p.query).get('q',[''])[0]));return
             elif p.path=='/api/requests':self.json(get_requests());return

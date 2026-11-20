@@ -30,17 +30,41 @@ for s in subjects:
   if s['id']=='db':put('index.html',(P/'modules/01-databases/demo.html').read_bytes())
   put('START_HERE.txt',f"BANKFLOW: {s['title']}\n{s['teacher']}\nУчебный комплект: {s['status']}\n{s['next']}\nОткройте README.md или главный документ в modules/{s['folder']}.\n")
  add(z,s['id'])
-# escape script closing tags inside embedded downloadable source
-j=lambda x:json.dumps(x,ensure_ascii=False,separators=(',',':')).replace('</','<\\/')
-header='const SUBJECTS='+j(subjects)+';\nconst DATA='+j(data)+';\nconst FILES='+j(files)+';'
-js=(P/'modules/06-server/exercises.js').read_text(encoding='utf-8')+'\n'+(P/'modules/06-server/lab-solutions.js').read_text(encoding='utf-8')+'\n'+(P/'src/workspace.js').read_text(encoding='utf-8')+'\n'+(P/'src/standards.js').read_text(encoding='utf-8')+'\n'+(P/'src/app.js').read_text(encoding='utf-8')
-html=(P/'src/template.html').read_text(encoding='utf-8').replace('__CSS__',(P/'src/style.css').read_text(encoding='utf-8')).replace('__DATA__',header).replace('__JS__',js)
-(P/'index.html').write_text(html,encoding='utf-8');
-# Version the offline cache with the actual compiled content.
+# Serve binary reports separately. Text previews and models also work with file://.
 import hashlib
-shell_digest = hashlib.sha256(html.encode())
-for asset in ('kanygin.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'modules/07-standards/variant-3.docx'):
-    shell_digest.update((P / asset).read_bytes())
-(P/'sw.js').write_text((P/'src/sw.template.js').read_text(encoding='utf-8').replace('__VERSION__',shell_digest.hexdigest()[:12]),encoding='utf-8')
+assets = P / 'assets'
+assets.mkdir(exist_ok=True)
+for record in files.values():
+    if record['encoding'] == 'base64':
+        del record['content']
+register = json.loads((P / 'docs/strategy-v2/08_REQUIREMENTS_REGISTER.json').read_text())
+payload = {'SUBJECTS': subjects, 'DATA': data, 'FILES': files, 'REGISTER': register}
+def compact(value):
+    return json.dumps(value, ensure_ascii=False, separators=(',', ':'))
+(assets / 'catalog.js').write_text(''.join('const '+key+'='+compact(value)+';\n' for key,value in payload.items()))
+scripts = ['assets/catalog.js','modules/06-server/exercises.js','modules/06-server/lab-solutions.js','src/workspace.js','src/standards.js','src/studio.js','src/laboratory.js','src/app.js']
+styles = ['src/style.css','src/studio.css']
+html = (P/'src/template.html').read_text().replace('__JS__',''.join('<script src="./'+f+'"></script>' for f in scripts)).replace('__CSS__',''.join('<link rel="stylesheet" href="./'+f+'">' for f in styles))
+(P/'index.html').write_text(html)
+shell = sorted(set(scripts + styles + list(files) + ['index.html','manifest.webmanifest','kanygin.html','icon.svg','icon-192.png','icon-512.png']))
+shell += sorted(f.relative_to(P).as_posix() for f in (assets / 'fonts').glob('*.woff2'))
+(assets / 'public-files.json').write_text(compact(shell))
+digest = hashlib.sha256()
+for path in shell:
+    digest.update(path.encode())
+    digest.update((P/path).read_bytes())
+worker = (P/'src/sw.template.js').read_text().replace('__VERSION__',digest.hexdigest()[:12]).replace('__ASSETS__',compact(['./']+['./'+f for f in shell]))
+(P/'sw.js').write_text(worker)
 
-print('HTML bytes',len(html.encode()),'embedded files',len(files))
+# Optional portable build for a single-file handoff.
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--standalone', type=Path, metavar='HTML')
+standalone = parser.parse_args().standalone
+if standalone:
+    binary = {k:base64.b64encode((P/k).read_bytes()).decode() for k,f in files.items() if f['encoding']=='base64'}
+    code = 'const EMBEDDED='+compact(binary)+';\n'+'\n'.join((P/f).read_text() for f in scripts)
+    portable = (P/'src/template.html').read_text().replace('__CSS__','<style>'+'\n'.join((P/f).read_text() for f in styles)+'</style>').replace('__JS__','<script>'+code.replace('</script', '<\\/script')+'</script>')
+    for font in (assets/'fonts').glob('*.woff2'):
+        portable = portable.replace('../assets/fonts/'+font.name,'data:font/woff2;base64,'+base64.b64encode(font.read_bytes()).decode())
+    standalone.write_text(portable)
