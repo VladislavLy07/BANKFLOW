@@ -1,3 +1,4 @@
+let presentationSnapshot=null;
 let defenseRoute='',defenseStep=0;
 const stagesOfDefense=['Цель работы','Постановка задачи','Исходные данные','Демонстрация','Результаты','Вывод','Код и документы'];
 const savedLab=e=>readStore('experiments',{})[stageKey(e.s,e.i)];
@@ -47,19 +48,20 @@ function readResult(C,e){
 }
 function demo(s){
  const C=$('#content'),e=entries().find(x=>x.s.id===s.id&&x.i===lab);if(!C||!e)return;
- const d=description(e),key=stageKey(s,lab),saved=savedLab(e);workingPlan??=originalPlan();
+ const d=description(e),key=stageKey(s,lab),saved=(subject==='defense'&&presentationSnapshot?.route===e.route?presentationSnapshot:savedLab(e));workingPlan??=originalPlan();
  const durations=readStore('planDurations',null);if(e.s.id==='std'&&e.i<3&&Array.isArray(durations)&&durations.length===workingPlan.length)durations.forEach((v,i)=>{if(Number.isInteger(v)&&v>0&&v<=365)workingPlan[i].dur=v});
- C.innerHTML='<div class="zone-switch">'+['Задание','Модель','Результаты'].map((v,i)=>'<button class="tool" data-zone="'+i+'">'+v+'</button>').join('')+'</div><div class="lab-grid" data-zone="1"><aside class="panel brief"><small>Задание · '+esc(e.n)+'</small><h3>'+esc(e.title)+'</h3><p>'+esc(d.task)+'</p><h4>Исходные данные</h4><p>'+esc(d.input)+'</p><h4>'+esc(d.variant)+'</h4><p>'+esc(d.status)+'</p><h4>Источник</h4><p>'+esc(d.source)+'</p><h4>К защите</h4><p>'+esc(d.requirements)+'</p></aside><div id="modelPane"></div><aside class="panel lab-result"><h3>Результаты</h3><output id="resultText"></output><label>Мой вывод<textarea id="labNote" rows="4"></textarea></label><div class="lab-buttons">'+['Запустить','Проверить','Сохранить','Экспортировать','Сбросить'].map((v,i)=>'<button class="'+(i===0?'btn':'tool')+'" data-op="'+i+'">'+v+'</button>').join('')+'</div><p id="labMessage" role="status"></p></aside></div>';
+ C.innerHTML='<header class="page-heading lab-heading"><small>'+esc(s.short)+' · '+esc(e.n)+'</small><h1>'+esc(e.title)+'</h1><p>'+esc(d.task)+'</p></header><details class="panel resources"><summary>Условия задания</summary><p>'+esc(d.input)+'</p><p>'+esc(d.variant)+' · '+esc(d.status)+'</p><p>'+esc(d.source)+'</p><p>'+esc(d.requirements)+'</p></details><div class="lab-body"><div id="modelPane"></div><section class="panel lab-result"><h2>Результат</h2><output id="resultText"></output><label>Мой вывод<textarea id="labNote" rows="3"></textarea></label><div class="actions"><button class="btn" data-op="2">Сохранить</button><button class="tool" data-op="3">Скачать</button>'+(subject==='defense'?'':'<button class="tool" data-op="5">Показать преподавателю</button>')+'</div><details class="minor-actions"><summary>Дополнительно</summary><button class="tool" data-op="1">Проверить</button> <button class="tool" data-op="4">Сбросить</button></details><p id="labMessage" role="status"></p></section></div>';
  const pane=$('#modelPane');legacyDemo(s,pane);enhanceModel(pane,e);$('#labNote').value=saved?.note||'';
  const restoreInputs=data=>{for(const el of inputs(pane)){if(!Object.hasOwn(data,el.id))continue;el.value=data[el.id];el.dispatchEvent(new Event(el.tagName==='SELECT'?'change':'input',{bubbles:true}))}};
  if(saved)restoreInputs(saved.inputs);
  const refresh=()=>{if(pane.isConnected)$('#resultText').textContent=readResult(pane,e)};refresh();pane.addEventListener('input',refresh);pane.addEventListener('change',refresh);pane.addEventListener('click',()=>queueMicrotask(()=>{if(pane.isConnected)refresh()}));
  const observer=new MutationObserver(()=>{if(pane.isConnected)refresh();else observer.disconnect()});observer.observe(pane,{childList:true,subtree:true,characterData:true});
- function snapshot(){return {title:e.title,inputs:Object.fromEntries(inputs(pane).map(el=>[el.id,el.value])),durations:e.s.id==='std'&&e.i<3?workingPlan.map(r=>r.dur):undefined,result:readResult(pane,e),note:$('#labNote').value,time:new Date().toISOString()}}
+ function snapshot(){return {route:e.route,title:e.title,inputs:Object.fromEntries(inputs(pane).map(el=>[el.id,el.value])),durations:e.s.id==='std'&&e.i<3?workingPlan.map(r=>r.dur):undefined,result:readResult(pane,e),note:$('#labNote').value,time:new Date().toISOString()}}
  C.querySelectorAll('[data-zone].tool').forEach(b=>b.onclick=()=>C.querySelector('.lab-grid').dataset.zone=b.dataset.zone);
  C.querySelectorAll('[data-op]').forEach(b=>b.onclick=()=>{
  const msg=$('#labMessage');if(b.dataset.op==='4'){const all=readStore('experiments',{});delete all[key];if(e.s.id==='std'&&e.i<3){workingPlan=originalPlan();writeStore('planDurations',workingPlan.map(r=>r.dur))}writeStore('experiments',all);demo(s);return}
  const invalid=pane.querySelector('input:invalid:not(#sampleName)');if(invalid||pane.querySelector('#modelValue')?.textContent.includes('больше, чем')){msg.textContent='Проверьте входные параметры';invalid?.reportValidity();return}
+ if(b.dataset.op==='5'){presentationSnapshot=snapshot();defenseRoute=e.route;defenseStep=0;location.hash='/defense';return}
  if(b.dataset.op==='0'){pane.querySelector('#runExercise')?.click();for(const el of inputs(pane))el.dispatchEvent(new Event('input',{bubbles:true}));refresh();msg.textContent='Модель обновлена'}
  if(b.dataset.op==='1'){
   refresh();let verdict='Проверены входные поля и наличие результата. Содержательный вывод сверьте с заданием.';
@@ -75,7 +77,7 @@ function demo(s){
  if(subject!=='defense')logActivity('Лабораторная',e.title,e.route);
 }
 function showDefense(){
- const all=entries(),e=all.find(x=>x.route===defenseRoute)||lastLab(),d=description(e),saved=savedLab(e);
+ const all=entries(),e=all.find(x=>x.route===defenseRoute)||lastLab(),d=description(e),saved=presentationSnapshot?.route===e.route?presentationSnapshot:savedLab(e);
  const body=[d.goal,d.task,d.variant+' · '+d.input+' · '+d.source,null,saved?.result||'Запустите демонстрацию и сохраните результат.',saved?.note||'Добавьте свой вывод в результатах лабораторной.',null];
  $('#main').innerHTML='<div class="defense-head"><small>Режим защиты · '+esc(e.s.short)+'</small>'+actionLink('В рабочую область',e.route,'tool')+'</div><div class="panel slide"><label>Работа<select id="defLab">'+all.map(x=>'<option value="'+x.route+'" '+(x.route===e.route?'selected':'')+'>'+esc(x.s.short+' · '+x.title)+'</option>').join('')+'</select></label><small>Этап '+(defenseStep+1)+' / 7</small><h1>'+esc(stagesOfDefense[defenseStep])+'</h1><h2>'+esc(e.title)+'</h2><div id="slideBody">'+(body[defenseStep]?'<p>'+esc(body[defenseStep])+'</p>':'')+'</div><div class="actions"><button class="tool" id="prevSlide" '+(defenseStep===0?'disabled':'')+'>← Назад</button><button class="btn" id="nextSlide" '+(defenseStep===6?'disabled':'')+'>Далее →</button><button class="tool" id="full">Полный экран</button></div></div>';
  if(defenseStep===3){lab=e.i;$('#slideBody').innerHTML='<div id="content"></div>';demo(e.s)}

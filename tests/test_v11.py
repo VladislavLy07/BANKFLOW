@@ -36,11 +36,11 @@ with tempfile.TemporaryDirectory() as tmp:
    page.locator('#workSearch').fill('362');assert page.locator('#workCount').inner_text()=='Найдено: 1'
    with page.expect_download() as d:page.locator('#exportWork').click()
    assert d.value.suggested_filename=='bankflow-requests.csv'
-   page.evaluate("setRoute('audit')");page.locator('.progress-subject summary').first.click();page.locator('[data-stage]').first.select_option('Готово к показу');page.evaluate("setRoute(null)");assert page.locator('.stats strong').nth(1).inner_text()=='1'
-   page.evaluate("setRoute('audit')")
-   with page.expect_download() as d:page.locator('#exportProgress').click()
-   saved=Path(tmp)/'saved.json';d.value.save_as(str(saved));assert 'Готово к показу' in json.loads(saved.read_text())['progress'].values()
-   page.locator('#importProgress').set_input_files(str(saved));page.wait_for_function("document.querySelector('#progressMessage')?.textContent.includes('импортирован')")
+   page.evaluate("setRoute('audit')");page.locator('[data-progress]').first.select_option('2');page.evaluate("setRoute(null)");assert '1 из' in page.locator('.plan-preview p').inner_text()
+   page.evaluate("setRoute('audit')");page.get_by_text('Данные и настройки',exact=True).click()
+   with page.expect_download() as d:page.locator('#exportAll').click()
+   saved=Path(tmp)/'saved.json';d.value.save_as(str(saved));assert 'Готово к показу' in json.loads(json.loads(saved.read_text())['data']['bankflow:v1.1:progress']).values()
+   page.locator('#importAll').set_input_files(str(saved));page.wait_for_function("document.querySelector('#toast')?.textContent.includes('импортированы')")
    page.evaluate("server=false;setRoute('workspace')");page.locator('#requestForm button[type=submit]').click();assert '361' in page.locator('#workMetrics').inner_text();page.locator('[data-req-id="361"]').select_option('Закрыто');page.evaluate("setRoute(null)");page.evaluate("setRoute('workspace')");assert page.locator('[data-req-id="361"]').input_value()=='Закрыто';assert '361' in page.evaluate("localStorage.getItem('bankflow:v1.1:requests')")
    page.evaluate("setRoute('std','demo',2)");assert '32 раб. дн.' in page.locator('#stdLab').inner_text();assert page.evaluate("location.hash.includes('std/demo/2')");page.evaluate("readRoute();render()");assert '32 раб. дн.' in page.locator('#stdLab').inner_text();assert not errors,errors
    page.screenshot(path=str(P/'tests'/'v11-mobile.png'),full_page=False)

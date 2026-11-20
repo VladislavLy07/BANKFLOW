@@ -9,7 +9,7 @@ with sync_playwright() as w:
  page.goto((P/'index.html').as_uri()); page.wait_for_selector('.subject-card');assert page.locator('.subject-card').count()==8
  page.screenshot(path=str(P/'tests'/'preview.png'),full_page=False)
  for s in ['db','vmip','iis','isit','design','server','std']:
-  page.evaluate("id=>setRoute(id)",s); page.wait_for_selector('#content .panel');
+  page.evaluate("id=>setRoute(id,'demo',0)",s); page.wait_for_selector('#content .panel');
   if s=='db':
    page.locator('#search').fill('Орлова'); assert 'Найдено 4' in page.locator('#count').inner_text();page.locator('#search').fill('неттакого');assert 'Найдено 0' in page.locator('#count').inner_text();page.locator('#search').fill('');
   if s=='vmip':assert '112' in page.locator('#calcResult').inner_text();page.locator('#months').fill('1');assert '101' in page.locator('#calcResult').inner_text()
@@ -24,15 +24,14 @@ with sync_playwright() as w:
    for i in range(9):page.locator('#labSelect').select_option(str(i));page.wait_for_selector('#serverLab h3');
    page.locator('#labSelect').select_option('0');assert 'Палиндром: да' in page.locator('#exResult').inner_text()
   if s=='std':
-   page.locator('.study-link').first.click()
    for i in range(8):page.locator('#labSelect').select_option(str(i));page.wait_for_selector('#stdLab h3')
-  page.locator('[data-tab="labs"]').click();assert page.locator('.lab-card').count()>0
-  page.locator('[data-tab="code"]').click();assert page.locator('.file-row').count()>0
-  page.locator('[data-tab="deliver"]').click();
+  page.evaluate("id=>setRoute(id,'labs')",s);assert page.locator('.work-row').count()>0
+  page.locator('.resources summary').click();page.get_by_role('link',name='Файлы и исходники').click();assert page.locator('.file-row').count()>0
+  page.evaluate("id=>setRoute(id,'deliver')",s)
   with page.expect_download() as d:page.get_by_text('Скачать комплект ZIP',exact=False).click()
   assert d.value.suggested_filename.endswith('.zip')
   log.append(s+': nav / demo / labs / files / zip OK')
- page.evaluate("setRoute('audit')");assert 'ОФП/СМГ' in page.locator('#main').inner_text();page.locator('[data-check="0"]').check();assert page.locator('[data-check="0"]').is_checked()
+ page.evaluate("setRoute('audit')");box=page.locator('[data-teacher]').first;box.check();page.reload();assert box.is_checked();box.uncheck();assert not box.is_checked()
  page.set_viewport_size({'width':800,'height':1200});page.locator('#brand').click();assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
  page.set_viewport_size({'width':390,'height':844});page.locator('#brand').click();assert page.evaluate('document.documentElement.scrollWidth <= innerWidth');page.screenshot(path=str(P/'tests'/'mobile.png'),full_page=True)
  page.evaluate("setRoute('db')");assert page.evaluate('document.documentElement.scrollWidth <= innerWidth');
