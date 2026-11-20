@@ -2,7 +2,7 @@ const stdPath='modules/07-standards/';
 let selectedStage=8;
 const stdBook=()=>JSON.parse(FILES[stdPath+'solutions.json'].content);
 function stdList(C,s){
- C.innerHTML='<section class="panel studies"><h2>Лабораторные работы</h2>'+s.labs.map(([id,name,detail],i)=>`<a class="study-link" href="#/std/demo/${i}"><b>${id}</b><span><strong>${esc(name)}</strong><small>${esc(detail)}</small></span> →</a>`).join('')+questions(stdBook())+'</section>';
+ C.innerHTML='<section class="panel studies"><h2>Лабораторные работы</h2><a href="kanygin.html">Оглавление варианта № 3 и Word-отчёт</a>'+s.labs.map(([id,name,detail],i)=>`<a class="study-link" href="#/std/demo/${i}"><b>${id}</b><span><strong>${esc(name)}</strong><small>${esc(detail)}</small></span> →</a>`).join('')+questions(stdBook())+'</section>';
  bindQuestions(C);
 }
 function questions(book){
@@ -24,9 +24,9 @@ function studyPlan(index,book){
  return '<p><strong>'+days+' рабочих дня</strong> · 17 этапов · Справочная билетных касс</p>'+diagram+`<label>Этап проекта <select id="pickStage">${rows.map(r=>`<option value="${r.id}" ${r.id===selectedStage?'selected':''}>${r.id}. ${esc(r.name)}</option>`).join('')}</select></label><p class="stage-info"><b>${esc(chosen.name)}</b> · ${esc(chosen.role)} · ${chosen.dur} дн. · ${dayOfPlan(chosen.es)}–${dayOfPlan(chosen.ef-1)}<br>Предшественники: ${chosen.deps.join(', ')||'нет'} · Резерв: ${chosen.slack} дн.</p><nav class="study-nav">${['Календарь','Оперограмма','Сеть'].map((x,i)=>`<a href="#/std/demo/${i}">${x}</a>`).join('')}</nav>`;
 }
 function modelResult(i){
- if(i===4){const times=[.2,.4,.8,.3,.1,.5,.3,.4],errors=[5,2,1,0,3,2,4,1],sum=a=>a.reduce((x,y)=>x+y,0),rate=sum(errors.slice(2))/sum(times.slice(2));return `<p>После восьмого прогона λ = ${rate.toFixed(6)} ч⁻¹. За 0,1 ч R = ${Math.exp(-rate*.1).toFixed(5)}.</p><svg viewBox="0 0 480 140" aria-label="Безотказность при t от нуля до часа"><path fill="none" stroke="#28547c" stroke-width="3" d="${Array.from({length:101},(_,k)=>(k?'L':'M')+(35+4.2*k)+' '+(110-100*Math.exp(-rate*k/100))).join(' ')}"/><text x="5" y="16">1</text><text x="5" y="114">0</text><text x="35" y="136">0 ч</text><text x="425" y="136">1 ч</text></svg>`;}
+ if(i===4){const times=[.2,.4,.8,.3,.1,.5,.3,.4],errors=[5,2,1,0,3,2,4,1],sum=a=>a.reduce((x,y)=>x+y,0),rate=sum(errors.slice(2))/sum(times.slice(2));return `<p>Расчёт при выбранной интерпретации прогонов. После восьмого прогона λ = ${rate.toFixed(6)} ч⁻¹. За 0,1 ч R = ${Math.exp(-rate*.1).toFixed(5)}.</p><svg viewBox="0 0 480 140" aria-label="Безотказность при t от нуля до часа"><path fill="none" stroke="#28547c" stroke-width="3" d="${Array.from({length:101},(_,k)=>(k?'L':'M')+(35+4.2*k)+' '+(110-100*Math.exp(-rate*k/100))).join(' ')}"/><text x="5" y="16">1</text><text x="5" y="114">0</text><text x="35" y="136">0 ч</text><text x="425" y="136">1 ч</text></svg>`;}
  if(i===5){const a=13,b=15,c=5,total=a*b/c,seen=a+b-c;return `<svg viewBox="0 0 460 110" aria-label="Распределение найденных ошибок"><ellipse cx="185" cy="52" rx="100" ry="45" fill="#c1ddea"/><ellipse cx="275" cy="52" rx="100" ry="45" fill="#e4c791" opacity=".7"/><g text-anchor="middle"><text x="140" y="58">${a-c}</text><text x="230" y="58">${c}</text><text x="320" y="58">${b-c}</text></g></svg><p>Найдено ${seen} уникальных · Оценка всего ${total} · Осталось ${total-seen}</p>`;}
- if(i===6){const v=3e-7,T0=1/((v/1400)*v*70),T=T0*Math.exp(6*16/(7*T0));return `<p>R(16) = ${Math.exp(-16/T).toFixed(15)} · 1 − R ≈ ${(-Math.expm1(-16/T)).toExponential(2)}</p>`;}return '';
+ if(i===6){const v=3e-7,T0=1/((v/1400)*v*70),T=T0*Math.exp(6*16/(7*T0));return `<p>Условный результат при выбранных коэффициентах. R(16) = ${Math.exp(-16/T).toFixed(15)} · 1 − R ≈ ${(-Math.expm1(-16/T)).toExponential(2)}</p>`;}return '';
 }
 function std(C){
  const book=stdBook(),s=SUBJECTS.find(x=>x.id==='std'),[id,name]=s.labs[lab],blocks=book[id];
