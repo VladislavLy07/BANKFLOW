@@ -13,7 +13,10 @@ for s in subjects:
   if p.is_file() and '__pycache__' not in p.parts:add(p,s['id'])
 for p in sorted((P/'data').glob('*.csv')):add(p,'iis' if p.name=='requests_raw.csv' else 'db')
 for p in sorted((P/'database').glob('*.sql')):add(p,'db')
-for p in sorted((P/'docs').glob('*.md')):add(p,'all')
+# Only these repository documents belong in the learner catalog and PWA cache.
+catalog_documents = ['08-physical-education.md', 'ARCHITECTURE.md', 'AUDIT.md']
+for name in catalog_documents:
+    add(P / 'docs' / name, 'all')
 add(P/'backend/server.py','db')
 # individual zip kits are self-contained in same root layout. Include relevant shared files.
 (P/'exports').mkdir(exist_ok=True)
